@@ -2,6 +2,7 @@
 #define COMPLEX_COMPLEX_H_20191010
 
 #include <iosfwd>
+#include <iostream>
 
 struct Complex {
     double re = 0, im = 0;
@@ -49,11 +50,13 @@ struct Complex {
     Complex& operator/= (const Complex &r);
     Complex& operator/= (const double &r);
 
-    [[nodiscard]] std::istream& ReadFrom(std::istream& istrm) noexcept;
+    [[nodiscard]] std::istream& ReadFrom(std::istream& in);
 
-    std::istream& operator>>(std::istream& istrm) noexcept;
+    [[nodiscard]] std::ostream& WriteTo(std::ostream& out) const;
 
-    std::ostream& operator<< (std::ostream &out) noexcept;
+    std::istream& operator>>(std::istream& in) { return ReadFrom(in); };
+
+    std::ostream& operator<< (std::ostream &out) const {return WriteTo(out);};
 };
 
 [[nodiscard]] Complex operator+ (const double &l, const Complex &r) noexcept;
